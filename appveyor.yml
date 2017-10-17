@@ -1,7 +1,7 @@
 # @Author: guiguan
 # @Date:   2017-10-18T02:34:24+11:00
 # @Last modified by:   guiguan
-# @Last modified time: 2017-10-18T10:27:43+11:00
+# @Last modified time: 2017-10-18T10:50:41+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -24,4 +24,4 @@
 version: '{build}.{branch}'
 
 install:
-  - dir
+  - dir dbkoda
