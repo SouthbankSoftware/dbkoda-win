@@ -1,2 +1,2 @@
 # dbkoda-win
-dbKoda for Windows
+*dbKoda for Windows*
