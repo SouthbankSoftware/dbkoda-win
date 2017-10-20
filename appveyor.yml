@@ -1,7 +1,7 @@
 # @Author: guiguan
 # @Date:   2017-10-18T02:34:24+11:00
 # @Last modified by:   guiguan
-# @Last modified time: 2017-10-18T10:50:41+11:00
+# @Last modified time: 2017-10-18T11:37:54+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -21,7 +21,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with dbKoda.  If not, see <http://www.gnu.org/licenses/>.
 
+environment:
+  nodejs_version: "7.10.1"
+
 version: '{build}.{branch}'
 
+image: Visual Studio 2017
+
+# shallow clone superproject
+clone_depth: 1
+
+cache:
+ - "%LOCALAPPDATA%\\Yarn"
+
 install:
-  - dir dbkoda
+  - ps: Install-Product node $env:nodejs_version
+  - yarn -v
+
+build: off
