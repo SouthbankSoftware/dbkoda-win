@@ -156,3 +156,10 @@ gulp.task('downloadCSC', (cb) => {
  * --code-sign: whether to code sign
  */
 gulp.task('build', sequence(['buildUi', 'buildController'], 'buildDbKoda'));
+
+/**
+ * Build
+ *
+ * --code-sign: whether to code sign
+ */
+gulp.task('default', sequence('updateSubmodules', 'build'));
