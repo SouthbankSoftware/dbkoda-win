@@ -42,5 +42,5 @@ clone_script:
 install:
   - ps: Install-Product node $env:nodejs_version
 
-build:
+build_script:
   - yarn gulp build --code-sign
