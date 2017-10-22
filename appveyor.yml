@@ -41,6 +41,6 @@ clone_script:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - java -v
+  - java -version
 
 build: off
