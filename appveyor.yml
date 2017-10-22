@@ -36,7 +36,7 @@ init:
   - git config --global core.autocrlf input
 
 clone_script:
-  - cmd: >-
+  - ps: >-
       git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
       cd %APPVEYOR_BUILD_FOLDER%
       git checkout -qf %APPVEYOR_REPO_COMMIT%
