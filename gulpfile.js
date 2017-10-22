@@ -30,20 +30,38 @@ const shell = require('gulp-shell');
 const { argv } = require('yargs');
 const through = require('through2');
 const pump = require('pump');
+const sequence = require('gulp-sequence');
+const request = require('request');
+const fs = require('fs');
+const path = require('path');
 
 const GITHUB_BASE_URL = 'https://github.com/SouthbankSoftware';
+const CSC_FILE_NAME = 'ssl_com_code_signing_certificate.p12';
 
+/**
+ * Update Submodules
+ */
 gulp.task(
   'updateSubmodules',
-  shell.task('git submodule update --init --recursive --recommend-shallow --depth=1 --remote')
+  shell.task(
+    'git submodule update --init --recursive --recommend-shallow --depth=1 --remote',
+    { cwd: __dirname }
+  )
 );
 
+/**
+ * Switch Submodule Branch
+ *
+ * -b: branch name
+ * --depth: clone depth. Make sure the target branch is within the clone depth
+ */
 gulp.task('switchSubmoduleBranch', (cb) => {
   const branchName = argv.b;
   if (!branchName) {
     cb(new Error('Please specify a branch name using -b'));
   }
   const depth = argv.depth || false;
+  process.chdir(__dirname);
   pump(
     [
       gulp.src(''),
@@ -70,3 +88,71 @@ gulp.task('switchSubmoduleBranch', (cb) => {
     cb
   );
 });
+
+/**
+ * Build dbKoda UI
+ */
+gulp.task('buildUi', (cb) => {
+  process.chdir(path.resolve(__dirname, 'dbkoda-ui'));
+  pump([gulp.src(''), shell(['yarn install --no-progress'])], cb);
+});
+
+/**
+ * Build dbKoda Controller
+ */
+gulp.task('buildController', (cb) => {
+  process.chdir(path.resolve(__dirname, 'dbkoda-controller'));
+  pump([gulp.src(''), shell(['yarn install --no-progress'])], cb);
+});
+
+/**
+ * Build dbKoda App
+ *
+ * --code-sign: whether to code sign
+ */
+gulp.task('buildDbKoda', (cb) => {
+  process.chdir(path.resolve(__dirname, 'dbkoda'));
+
+  const codeSign = !!argv.codeSign;
+  let envPrefix;
+
+  if (codeSign) {
+    const { CSC_LINK, CSC_KEY_PASSWORD } = process.env;
+
+    envPrefix = `set CSC_LINK=${CSC_LINK}&& set CSC_KEY_PASSWORD=${CSC_KEY_PASSWORD}&& `;
+  } else {
+    envPrefix = '';
+  }
+
+  pump(
+    [
+      gulp.src(''),
+      shell([
+        'yarn install --no-progress',
+        'yarn dev:link:win',
+        `${envPrefix}yarn dist:win64`
+      ])
+    ],
+    cb
+  );
+});
+
+/**
+ * Download code signing certificate
+ */
+gulp.task('downloadCSC', (cb) => {
+  const { CSC_URL } = process.env;
+  request
+    .get('sdf' + CSC_URL)
+    .on('error', cb)
+    .pipe(fs.createWriteStream(CSC_FILE_NAME))
+    .on('error', cb)
+    .on('end', cb);
+});
+
+/**
+ * Build
+ *
+ * --code-sign: whether to code sign
+ */
+gulp.task('build', sequence(['buildUi', 'buildController'], 'buildDbKoda'));
