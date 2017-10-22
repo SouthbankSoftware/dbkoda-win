@@ -44,6 +44,4 @@ install:
 
 build_script:
   - yarn install --no-progress
-  - yarn global add increase-memory-limit
-  - increase-memory-limit
   - yarn gulp build --code-sign
