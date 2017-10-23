@@ -43,5 +43,6 @@ install:
   - ps: Install-Product node $env:nodejs_version
 
 build_script:
+  - systeminfo
   - yarn install --no-progress
   - yarn gulp build --code-sign
