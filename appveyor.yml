@@ -43,9 +43,15 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - java -version
   - python --version
-  # - npm install -g --quiet --no-progress node-gyp windows-build-tools
+  # - systeminfo
 
 build_script:
-  # - systeminfo
   - yarn install --no-progress
   - yarn gulp build
+  - yarn gulp addVersionSuffixToBuildArtifact
+
+test: off
+
+artifacts:
+  - path: dbkoda/dist/dbKoda-*.exe
+    name: dbkodaExe

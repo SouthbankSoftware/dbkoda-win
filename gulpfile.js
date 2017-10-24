@@ -34,6 +34,9 @@ const sequence = require('gulp-sequence');
 const request = require('request');
 const fs = require('fs');
 const path = require('path');
+const rename = require('gulp-rename');
+const del = require('del');
+const vinylPaths = require('vinyl-paths');
 
 const GITHUB_BASE_URL = 'https://github.com/SouthbankSoftware';
 const CSC_FILE_NAME = 'ssl_com_code_signing_certificate.p12';
@@ -144,6 +147,27 @@ gulp.task('downloadCSC', (cb) => {
     .pipe(fs.createWriteStream(CSC_FILE_NAME))
     .on('error', cb)
     .on('end', cb);
+});
+
+/**
+ * Add version (from AppVeyor) suffix to build artifact
+ */
+gulp.task('addVersionSuffixToBuildArtifact', (cb) => {
+  process.chdir(__dirname);
+
+  const { APPVEYOR_BUILD_VERSION } = process.env;
+
+  pump(
+    [
+      gulp.src('./dbkoda/dist/*.exe'),
+      vinylPaths(del),
+      rename((path) => {
+        path.basename += `-${APPVEYOR_BUILD_VERSION}`;
+      }),
+      gulp.dest('./dbkoda/dist')
+    ],
+    cb
+  );
 });
 
 /**
