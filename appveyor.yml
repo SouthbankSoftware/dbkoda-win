@@ -29,8 +29,8 @@ version: '{build}.{branch}'
 
 image: Visual Studio 2017
 
-cache:
-  - "%LOCALAPPDATA%\\Yarn"
+# cache:
+#   - "%LOCALAPPDATA%\\Yarn"
 
 clone_script:
   - cmd: |
@@ -43,6 +43,6 @@ install:
   - ps: Install-Product node $env:nodejs_version
 
 build_script:
-  - systeminfo
+  # - systeminfo
   - yarn install --no-progress
   - yarn gulp build --code-sign
