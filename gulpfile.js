@@ -94,7 +94,16 @@ gulp.task('switchSubmoduleBranch', (cb) => {
  */
 gulp.task('buildUi', (cb) => {
   process.chdir(path.resolve(__dirname, 'dbkoda-ui'));
-  pump([gulp.src(''), shell(['yarn install --no-progress'])], cb);
+  pump(
+    [
+      gulp.src(''),
+      shell([
+        'yarn install --no-progress',
+        'node --max_old_space_size=1024 ./node_modules/webpack/bin/webpack.js --config webpack/prod.js --optimize-minimize'
+      ])
+    ],
+    cb
+  );
 });
 
 /**
@@ -107,22 +116,9 @@ gulp.task('buildController', (cb) => {
 
 /**
  * Build dbKoda App
- *
- * --code-sign: whether to code sign
  */
 gulp.task('buildDbKoda', (cb) => {
   process.chdir(path.resolve(__dirname, 'dbkoda'));
-
-  const codeSign = !!argv.codeSign;
-  let envPrefix;
-
-  if (codeSign) {
-    const { CSC_LINK, CSC_KEY_PASSWORD } = process.env;
-
-    envPrefix = `set CSC_LINK=${CSC_LINK}&& set CSC_KEY_PASSWORD=${CSC_KEY_PASSWORD}&& `;
-  } else {
-    envPrefix = '';
-  }
 
   pump(
     [
@@ -130,7 +126,7 @@ gulp.task('buildDbKoda', (cb) => {
       shell([
         'yarn install --no-progress',
         'yarn dev:link:win',
-        `${envPrefix}yarn dist:win64`
+        'yarn dist:win64'
       ])
     ],
     cb
@@ -141,9 +137,9 @@ gulp.task('buildDbKoda', (cb) => {
  * Download code signing certificate
  */
 gulp.task('downloadCSC', (cb) => {
-  const { CSC_URL } = process.env;
+  const { CSC_LINK } = process.env;
   request
-    .get('sdf' + CSC_URL)
+    .get(CSC_LINK)
     .on('error', cb)
     .pipe(fs.createWriteStream(CSC_FILE_NAME))
     .on('error', cb)
@@ -152,14 +148,10 @@ gulp.task('downloadCSC', (cb) => {
 
 /**
  * Build
- *
- * --code-sign: whether to code sign
  */
 gulp.task('build', sequence('buildUi', 'buildController', 'buildDbKoda'));
 
 /**
  * Build
- *
- * --code-sign: whether to code sign
  */
 gulp.task('default', sequence('updateSubmodules', 'build'));
