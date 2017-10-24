@@ -43,7 +43,7 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - java -version
   - python --version
-  - npm install -g node-gyp
+  - npm install -g --quiet --no-progress node-gyp windows-build-tools
 
 build_script:
   # - systeminfo
