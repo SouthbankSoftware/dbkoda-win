@@ -50,8 +50,11 @@ build_script:
   - yarn gulp build
   - yarn gulp addVersionSuffixToBuildArtifact
 
+after_build:
+  - ps: Get-ChildItem .\dbkoda\dist\*.exe | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
+
 test: off
 
-artifacts:
-  - path: dbkoda/dist/dbKoda-*.exe
-    name: dbkodaExe
+deploy:
+  - provider: Environment
+    name: beta
