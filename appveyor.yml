@@ -23,7 +23,7 @@
 
 environment:
   nodejs_version: "7.10.1"
-  JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 
 version: '{build}.{branch}'
 
@@ -43,7 +43,7 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - java -version
   - python --version
-  - npm install -g --quiet --no-progress node-gyp windows-build-tools
+  # - npm install -g --quiet --no-progress node-gyp windows-build-tools
 
 build_script:
   # - systeminfo
