@@ -147,11 +147,11 @@ gulp.task('downloadCSC', (cb) => {
 });
 
 /**
- * Build
+ * Build all
  */
 gulp.task('build', sequence('buildUi', 'buildController', 'buildDbKoda'));
 
 /**
- * Build
+ * Default
  */
 gulp.task('default', sequence('updateSubmodules', 'build'));

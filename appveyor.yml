@@ -41,8 +41,11 @@ clone_script:
 
 install:
   - ps: Install-Product node $env:nodejs_version
+  - java -version
+  - python --version
+  - npm install -g node-gyp
 
 build_script:
   # - systeminfo
   - yarn install --no-progress
-  - yarn gulp build --code-sign
+  - yarn gulp build
