@@ -129,7 +129,7 @@ gulp.task('buildDbKoda', (cb) => {
       shell([
         'yarn install --no-progress',
         'yarn dev:link:win',
-        'yarn dist:win64'
+        'yarn dist:win'
       ])
     ],
     cb
