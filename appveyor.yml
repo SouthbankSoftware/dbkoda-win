@@ -52,6 +52,7 @@ build_script:
 
 after_build:
   - ps: Get-ChildItem .\dbkoda\dist\*.exe | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
+  - ps: Get-ChildItem .\dbkoda\dist\*.yml | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
 
 test: off
 

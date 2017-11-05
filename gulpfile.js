@@ -129,7 +129,7 @@ gulp.task('buildDbKoda', (cb) => {
       shell([
         'yarn install --no-progress',
         'yarn dev:link:win',
-        'yarn dist:win'
+        'yarn dist:win:release'
       ])
     ],
     cb
@@ -159,7 +159,7 @@ gulp.task('addVersionSuffixToBuildArtifact', (cb) => {
 
   pump(
     [
-      gulp.src('./dbkoda/dist/*.exe'),
+      gulp.src(['./dbkoda/dist/*.exe', './dbkoda/dist/*.yml']),
       vinylPaths(del),
       rename((path) => {
         path.basename += `-${APPVEYOR_BUILD_VERSION}`;
