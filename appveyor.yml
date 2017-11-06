@@ -48,11 +48,11 @@ install:
 build_script:
   - yarn install --no-progress
   - yarn gulp build
+  - ps: Get-ChildItem .\dbkoda\dist\*.exe | %{ certutil -hashfile $_.FullName SHA1 > "$($_.FullName).sha1" }
   - yarn gulp addVersionSuffixToBuildArtifact
 
 after_build:
-  - ps: Get-ChildItem .\dbkoda\dist\*.exe | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
-  - ps: Get-ChildItem .\dbkoda\dist\*.yml | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
+  - ps: Get-ChildItem .\dbkoda\dist\* -Include *.exe, *.yml, *.sha1 | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
 
 test: off
 

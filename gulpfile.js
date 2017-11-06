@@ -159,7 +159,7 @@ gulp.task('addVersionSuffixToBuildArtifact', (cb) => {
 
   pump(
     [
-      gulp.src(['./dbkoda/dist/*.exe', './dbkoda/dist/*.yml']),
+      gulp.src(['./dbkoda/dist/*.exe', './dbkoda/dist/*.yml', './dbkoda/dist/*.sha1']),
       vinylPaths(del),
       rename((path) => {
         path.basename += `-${APPVEYOR_BUILD_VERSION}`;
