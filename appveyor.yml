@@ -33,10 +33,10 @@ image: Visual Studio 2017
 #   - "%LOCALAPPDATA%\\Yarn"
 
 clone_script:
-  - ps: |
-      git clone -q --depth=3 --branch=${env:APPVEYOR_REPO_BRANCH} https://github.com/${env:APPVEYOR_REPO_NAME}.git ${env:APPVEYOR_BUILD_FOLDER}
-      cd ${env:APPVEYOR_BUILD_FOLDER}
-      git checkout -qf ${env:APPVEYOR_REPO_COMMIT}
+  - cmd: |
+      git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+      cd %APPVEYOR_BUILD_FOLDER%
+      git checkout -qf %APPVEYOR_REPO_COMMIT%
       git submodule update --init --recursive --recommend-shallow --remote
 
 install:
