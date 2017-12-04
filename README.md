@@ -1,8 +1,20 @@
 # dbkoda-win
 *dbKoda for Windows*
 
+<p align="left">
+  <a href="https://ci.appveyor.com/project/SouthbankDeveloper/dbkoda-win">
+    <img src="https://img.shields.io/appveyor/ci/SouthbankDeveloper/dbkoda-win.svg?style=flat-square">
+  </a>
+  <a href="https://david-dm.org/SouthbankSoftware/dbkoda-win">
+    <img src="https://img.shields.io/david/SouthbankSoftware/dbkoda-win.svg?style=flat-square">
+  </a>
+  <a href="https://david-dm.org/SouthbankSoftware/dbkoda-win?type=dev">
+    <img src="https://img.shields.io/david/dev/SouthbankSoftware/dbkoda-win.svg?style=flat-square">
+  </a>
+</p>
+
 ## Requirement
-* Node 7.10.1
+* Node 8.9.1
 * Yarn
 * node-gyp: `yarn global add node-gyp` or `npm install -g node-gyp`
 * JDK 1.8.0

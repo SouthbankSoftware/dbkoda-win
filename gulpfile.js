@@ -47,7 +47,7 @@ const CSC_FILE_NAME = 'ssl_com_code_signing_certificate.p12';
 gulp.task(
   'updateSubmodules',
   shell.task(
-    'git submodule update --init --recursive --recommend-shallow --depth=1 --remote',
+    'git submodule update --init --recursive --recommend-shallow --remote',
     { cwd: __dirname }
   )
 );

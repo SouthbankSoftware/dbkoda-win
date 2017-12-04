@@ -1,6 +1,6 @@
 {
   "name": "dbkoda-win",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "dbKoda for Windows",
   "main": "gulpfile.js",
   "author": {
@@ -9,6 +9,9 @@
     "url": "http://southbanksoftware.com"
   },
   "license": "AGPL-3.0",
+  "engines": {
+    "node": ">= 8.9.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SouthbankSoftware/dbkoda-win.git"
