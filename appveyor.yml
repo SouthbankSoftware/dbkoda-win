@@ -22,7 +22,7 @@
 # along with dbKoda.  If not, see <http://www.gnu.org/licenses/>.
 
 environment:
-  nodejs_version: "7.10.1"
+  nodejs_version: "8.9.1"
   JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 
 version: '{build}.{branch}'
@@ -47,6 +47,7 @@ install:
 
 build_script:
   - yarn install --no-progress
+  - yarn gulp switchSubmoduleBranch -b dbkoda-x
   - yarn gulp build
   - ps: Get-ChildItem .\dbkoda\dist\*.exe | %{ certutil -hashfile $_.FullName SHA1 > "$($_.FullName).sha1" }
   - yarn gulp addVersionSuffixToBuildArtifact
