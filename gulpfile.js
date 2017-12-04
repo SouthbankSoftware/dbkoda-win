@@ -102,7 +102,7 @@ gulp.task('buildUi', (cb) => {
       gulp.src(''),
       shell([
         'yarn install --no-progress',
-        'node --max_old_space_size=1024 node_modules/.bin/webpack --config webpack/prod.js'
+        'node --max_old_space_size=1024 ./node_modules/webpack/bin/webpack.js --config webpack/prod.js'
       ])
     ],
     cb
