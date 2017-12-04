@@ -32,9 +32,9 @@ image: Visual Studio 2017
 # cache:
 #   - "%LOCALAPPDATA%\\Yarn"
 
+#git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
 clone_script:
   - cmd: |
-      #git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
       git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
       cd %APPVEYOR_BUILD_FOLDER%git 
       git checkout -qf %APPVEYOR_REPO_COMMIT%
