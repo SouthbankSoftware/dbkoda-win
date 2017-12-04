@@ -34,8 +34,9 @@ image: Visual Studio 2017
 
 clone_script:
   - cmd: |
-      git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
-      cd %APPVEYOR_BUILD_FOLDER%
+      #git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+      git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+      cd %APPVEYOR_BUILD_FOLDER%git 
       git checkout -qf %APPVEYOR_REPO_COMMIT%
       git submodule update --init --recursive --recommend-shallow --depth=1 --remote
 
@@ -47,7 +48,6 @@ install:
 
 build_script:
   - yarn install --no-progress
-  - yarn gulp switchSubmoduleBranch -b dbkoda-x
   - yarn gulp build
   - ps: Get-ChildItem .\dbkoda\dist\*.exe | %{ certutil -hashfile $_.FullName SHA1 > "$($_.FullName).sha1" }
   - yarn gulp addVersionSuffixToBuildArtifact
