@@ -3,7 +3,7 @@
  * @Date:   1970-01-01T10:00:00+10:00
  * @Email:  root@guiguan.net
  * @Last modified by:   guiguan
- * @Last modified time: 2018-01-10T14:10:13+11:00
+ * @Last modified time: 2018-01-10T15:55:16+11:00
  *
  * dbKoda - a modern, open source code editor, for MongoDB.
  * Copyright (C) 2017-2018 Southbank Software
@@ -102,7 +102,7 @@ gulp.task('buildUi', (cb) => {
       gulp.src(''),
       shell([
         'yarn install --no-progress',
-        'node --max_old_space_size=1536 ./node_modules/webpack/bin/webpack.js --config webpack/prod.js'
+        'node --max_old_space_size=1280 ./node_modules/webpack/bin/webpack.js --config webpack/prod.js'
       ])
     ],
     cb
