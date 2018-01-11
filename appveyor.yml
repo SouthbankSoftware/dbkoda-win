@@ -1,7 +1,7 @@
 # @Author: guiguan
 # @Date:   2017-10-18T02:34:24+11:00
 # @Last modified by:   guiguan
-# @Last modified time: 2017-10-18T11:37:54+11:00
+# @Last modified time: 2018-01-11T15:00:06+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -28,6 +28,9 @@ environment:
 version: '{build}.{branch}'
 
 image: Visual Studio 2017
+
+init:
+  - git config --global core.autocrlf true
 
 # cache:
 #   - "%LOCALAPPDATA%\\Yarn"
