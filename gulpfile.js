@@ -3,7 +3,7 @@
  * @Date:   1970-01-01T10:00:00+10:00
  * @Email:  root@guiguan.net
  * @Last modified by:   guiguan
- * @Last modified time: 2018-01-10T15:55:16+11:00
+ * @Last modified time: 2018-01-24T14:29:59+11:00
  *
  * dbKoda - a modern, open source code editor, for MongoDB.
  * Copyright (C) 2017-2018 Southbank Software
@@ -46,10 +46,9 @@ const CSC_FILE_NAME = 'ssl_com_code_signing_certificate.p12';
  */
 gulp.task(
   'updateSubmodules',
-  shell.task(
-    'git submodule update --init --recursive --recommend-shallow --remote',
-    { cwd: __dirname }
-  )
+  shell.task('git submodule update --init --recursive --recommend-shallow --remote', {
+    cwd: __dirname
+  })
 );
 
 /**
@@ -68,24 +67,21 @@ gulp.task('switchSubmoduleBranch', (cb) => {
   pump(
     [
       gulp.src(''),
-      shell([
-        'git submodule deinit --all -f',
-        'git rm -f --ignore-unmatch dbkoda*'
-      ]),
+      shell(['git submodule deinit --all -f', 'git rm -f --ignore-unmatch dbkoda*']),
       through.obj((file, _encoding, done) => {
         sh.rm('-rf', 'dbkoda*', '.git/modules/dbkoda*');
         done(null, file);
       }),
       shell([
-        `git submodule add -b ${branchName} ${depth
-          ? `--depth=${depth}`
-          : ''} ${GITHUB_BASE_URL}/dbkoda-ui.git`,
-        `git submodule add -b ${branchName} ${depth
-          ? `--depth=${depth}`
-          : ''} ${GITHUB_BASE_URL}/dbkoda-controller.git`,
-        `git submodule add -b ${branchName} ${depth
-          ? `--depth=${depth}`
-          : ''} ${GITHUB_BASE_URL}/dbkoda.git`
+        `git submodule add -b ${branchName} ${
+          depth ? `--depth=${depth}` : ''
+        } ${GITHUB_BASE_URL}/dbkoda-ui.git`,
+        `git submodule add -b ${branchName} ${
+          depth ? `--depth=${depth}` : ''
+        } ${GITHUB_BASE_URL}/dbkoda-controller.git`,
+        `git submodule add -b ${branchName} ${
+          depth ? `--depth=${depth}` : ''
+        } ${GITHUB_BASE_URL}/dbkoda.git`
       ])
     ],
     cb
@@ -119,21 +115,26 @@ gulp.task('buildController', (cb) => {
 
 /**
  * Build dbKoda App
+ *
+ * --release: whether to build a release version so that app is able to auto-update to latest
+ *            version in release channel
+ * --dev: whether to build a dev version so that app is able to auto-update to latest version in dev
+ *            channel
  */
 gulp.task('buildDbKoda', (cb) => {
   process.chdir(path.resolve(__dirname, 'dbkoda'));
 
-  pump(
-    [
-      gulp.src(''),
-      shell([
-        'yarn install --no-progress',
-        'yarn dev:link:win',
-        'yarn dist:win:release'
-      ])
-    ],
-    cb
-  );
+  let buildCmd;
+
+  if (argv.release) {
+    buildCmd = 'yarn dist:win:release';
+  } else if (argv.dev) {
+    buildCmd = 'yarn dist:win:dev';
+  } else {
+    buildCmd = 'yarn dist:win';
+  }
+
+  pump([gulp.src(''), shell(['yarn install --no-progress', 'yarn dev:link:win', buildCmd])], cb);
 });
 
 /**
@@ -159,7 +160,12 @@ gulp.task('addVersionSuffixToBuildArtifact', (cb) => {
 
   pump(
     [
-      gulp.src(['./dbkoda/dist/*.exe', './dbkoda/dist/*.yml', './dbkoda/dist/*.sha1']),
+      gulp.src([
+        './dbkoda/dist/*.zip',
+        './dbkoda/dist/*.exe',
+        './dbkoda/dist/*.yml',
+        './dbkoda/dist/*.sha1'
+      ]),
       vinylPaths(del),
       rename((path) => {
         path.basename += `-${APPVEYOR_BUILD_VERSION}`;
