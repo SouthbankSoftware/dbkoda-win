@@ -2,7 +2,7 @@
 # @Date:   2017-10-18T02:34:24+11:00
 # @Email:  root@guiguan.net
 # @Last modified by:   guiguan
-# @Last modified time: 2018-01-25T15:01:32+11:00
+# @Last modified time: 2018-01-25T15:17:06+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -64,5 +64,5 @@ deploy:
 notifications:
   - provider: Slack
     auth_token:
-      secure: vp+oKY5+gIIK1uIRK46hR0s57V2vqnHaXCSiYWwAJa2qfLawNQ865LvUOSBm72esXQOL1dLDjWxl4H/IYmhcJnGom+ibxIaSyABV2kSrFFs=
+      secure: vp+oKY5+gIIK1uIRK46hR0YrV8dboMV1otk6pdcy5cLwu+IXO455hcIT/Cyzr8iRebRZyNbxKvGn51iDCrJx5Ml/qec+nT1XnajTJG9FVfg=
     channel: ci
