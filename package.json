@@ -36,7 +36,6 @@
     "gulp-sequence": "^1.0.0",
     "gulp-shell": "^0.6.5",
     "pump": "^2.0.1",
-    "request": "^2.83.0",
     "shelljs": "^0.8.1",
     "through2": "^2.0.3",
     "vinyl-paths": "^2.1.0",

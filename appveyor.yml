@@ -2,7 +2,7 @@
 # @Date:   2017-10-18T02:34:24+11:00
 # @Email:  root@guiguan.net
 # @Last modified by:   guiguan
-# @Last modified time: 2018-01-24T16:41:02+11:00
+# @Last modified time: 2018-01-25T14:58:30+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -50,16 +50,19 @@ install:
   - python --version
 
 build_script:
-  - yarn install --no-progress
-  - yarn gulp build --release
-  - ps: Get-ChildItem .\dbkoda\dist\*.exe | %{ certutil -hashfile $_.FullName SHA1 > "$($_.FullName).sha1" }
-  - yarn gulp addVersionSuffixToBuildArtifact
+  - echo test
 
 after_build:
-  - ps: Get-ChildItem .\dbkoda\dist\* -Include *.zip, *.exe, *.json, *.yml, *.sha1 | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
+  - ps: Get-ChildItem .\dbkoda\dist\* -Include *.exe, *.yml, *.sha1 | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
 
 test: off
 
 deploy:
   - provider: Environment
     name: beta
+
+notifications:
+  - provider: Slack
+    auth_token:
+      secure: vp+oKY5+gIIK1uIRK46hR0s57V2vqnHaXCSiYWwAJa2qfLawNQ865LvUOSBm72esXQOL1dLDjWxl4H/IYmhcJnGom+ibxIaSyABV2kSrFFs=
+    channel: '#ci'
