@@ -2,7 +2,7 @@
 # @Date:   2017-10-18T02:34:24+11:00
 # @Email:  root@guiguan.net
 # @Last modified by:   guiguan
-# @Last modified time: 2018-01-25T16:49:31+11:00
+# @Last modified time: 2018-01-25T16:52:22+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -33,9 +33,6 @@ image: Visual Studio 2017
 init:
   - git config --global core.autocrlf true
 
-# cache:
-#   - "%LOCALAPPDATA%\\Yarn"
-
 clone_script:
   - cmd: |
       git clone -q --depth=3 --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
@@ -50,7 +47,10 @@ install:
   - python --version
 
 build_script:
-  - echo test
+  - yarn install --no-progress
+  - yarn gulp build --release
+  - ps: Get-ChildItem .\dbkoda\dist\*.exe | %{ certutil -hashfile $_.FullName SHA1 > "$($_.FullName).sha1" }
+  - yarn gulp addVersionSuffixToBuildArtifact
 
 after_build:
   - ps: Get-ChildItem .\dbkoda\dist\* -Include *.exe, *.yml, *.sha1 | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name -DeploymentName dbkodaExe }
