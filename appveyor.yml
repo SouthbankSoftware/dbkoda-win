@@ -2,7 +2,7 @@
 # @Date:   2017-10-18T02:34:24+11:00
 # @Email:  root@guiguan.net
 # @Last modified by:   guiguan
-# @Last modified time: 2018-01-25T16:12:51+11:00
+# @Last modified time: 2018-01-25T16:13:29+11:00
 #
 # dbKoda - a modern, open source code editor, for MongoDB.
 # Copyright (C) 2017-2018 Southbank Software
@@ -66,4 +66,4 @@ notifications:
     incoming_webhook:
       secure: /h1lUK1IriL1d59h1effsQhgOHq0uWSt3s6/+eLmiHZfqwuWaDCJnZ/erxbK5ENdoyrKN34bgi1uioLJhOBqx+WPiecxLgkgCGdQPYbnhc4=
     channel: ci
-    template: Build <{{buildUrl}}|#{{buildNumber}}> (<{{commitUrl}}}|{{commitId}}>) of {{repositoryName}}@{{branch}} by {{commitAuthor}} {{status}} in {{duration}} on AppVeyor: {{commitMessage}}
+    template: "Build <{{buildUrl}}|#{{buildNumber}}> (<{{commitUrl}}}|{{commitId}}>) of {{repositoryName}}@{{branch}} by {{commitAuthor}} {{status}} in {{duration}} on AppVeyor: {{commitMessage}}"
