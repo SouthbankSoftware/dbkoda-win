@@ -1,4 +1,7 @@
-# dbkoda-win
+# dbkoda-win [No Longer Maintained]
+
+**Note:** Unfortunately this project is no longer under active development.
+
 *dbKoda for Windows*
 
 [![build](https://img.shields.io/appveyor/ci/SouthbankDeveloper/dbkoda-win.svg?style=flat-square)](https://ci.appveyor.com/project/SouthbankDeveloper/dbkoda-win)
